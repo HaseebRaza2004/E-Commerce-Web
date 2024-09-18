@@ -10,6 +10,7 @@ import Orders from "./pages/orders";
 import AddToCart from "./pages/carts";
 import NotFound from "./pages/notFound";
 import AboutUs from "./pages/aboutUs";
+import Profile from "./pages/profile";
 
 
 function App() {
@@ -28,9 +29,10 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProdutsDetails />} />
-            <Route path="/order" element={<Orders />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="/cart" element={<AddToCart />} />
             <Route path="/about" element={<AboutUs />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
