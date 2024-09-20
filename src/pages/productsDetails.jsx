@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { CartContext } from "../context/cartContext";
+import { Image } from "antd";
 
 function ProdutsDetails() {
 
@@ -46,7 +47,7 @@ function ProdutsDetails() {
             <section className="text-gray-600 body-font overflow-hidden">
               <div className="container px-5 py-24 mx-auto">
                 <div className="lg:w-4/5 mx-auto flex flex-wrap">
-                  <img
+                  <Image
                     alt="ecommerce"
                     className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
                     src={thumbnail}
@@ -79,12 +80,10 @@ function ProdutsDetails() {
                     </p>
                     <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                       <div className="flex">
-                        <span className="mr-3">Warranty :</span>
-                        <span className="mr-3">{warrantyInformation}</span>
+                        <span className="mr-3">Warranty : {warrantyInformation}</span>
                       </div>
                       <div className="flex ml-6 items-center">
-                        <span className="mr-3">Shipping :</span>
-                        <span className="mr-3">{shippingInformation}</span>
+                        <span className="mr-3">Shipping : {shippingInformation}</span>
                       </div>
                     </div>
                     <div className="flex">

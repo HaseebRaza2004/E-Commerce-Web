@@ -8,10 +8,8 @@ import { CartContext } from "../context/cartContext";
 function Header() {
 
     const {cartItems} = useContext(CartContext);
-
-    console.log('cart',cartItems);
+    // console.log('cart',cartItems);
     
-
     const isloggin = true;
 
     return (
