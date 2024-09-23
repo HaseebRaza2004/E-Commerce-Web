@@ -1,12 +1,61 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../context/cartContext";
+import { addDoc, collection } from "firebase/firestore";
+import { auth , db } from "../utils/utils";
+import { AuthContext } from "../context/authContext";
 
 function AddToCart() {
 
-  const { cartItems, removeItemFromCart, updateItemToCart } = useContext(CartContext);
+  const { cartItems, removeItemFromCart, updateItemToCart, clearCart } = useContext(CartContext);
+  const { user } = useContext(AuthContext);
 
   // Calculate total price
   const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const totalQuantity = cartItems.reduce(
+    (value, item) => value + item.quantity,
+    0
+  );
+
+  const checkoutOrder = async (values) => {
+    console.log('values' , values);
+
+  if (!user) {
+    message.error("You must be logged in to place an order.");
+    return;
+  }
+    
+    const checkoutObj = {
+      ...values,
+      totalPrice,
+      totalQuantity,
+      status: "pending",
+      user: auth.currentUser,
+      items: cartItems.map(
+        (data) =>
+          `Item : ${data.title} , Price : ${data.price}  (${data.quantity}) `
+      ),
+    };
+
+    // console.log('check out obj', checkoutObj);
+
+    // const docRef = collection(db, "orders");
+    // addDoc(docRef, checkoutObj).then(() =>
+    //   message.success("Your order is placed")
+    // );
+
+    const formattedText = `
+      Order Details:
+      Name: ${user.displayName || "N/A"}
+      Email: ${user.email}
+      Total Price: $${totalPrice.toFixed(2)}
+      Total Quantity: ${totalQuantity}
+      Items: 
+      ${cartItems.map(item => `- ${item.title}: $${item.price} (Quantity: ${item.quantity})`).join("\n")}
+    `;
+    const encodedTxt = encodeURIComponent(formattedText.trim());
+    window.open(`https://wa.me/923212190661?text=${encodedTxt}`);
+    clearCart();
+  };
 
   return (
     <div className="min-h-screen container mx-auto py-10">
@@ -29,7 +78,7 @@ function AddToCart() {
                 </div>
 
                 {/* quantity and remove options */}
-                <div className="flex justify-between items-center mt-4">  
+                <div className="flex justify-between items-center mt-4">
                   <div className="flex items-center">
                     <div className="flex items-center">
                       <div className="flex items-center space-x-2">
@@ -76,7 +125,7 @@ function AddToCart() {
             </div>
 
             <div className="mt-8 text-right">
-              <button className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
+              <button onClick={checkoutOrder} className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
                 Proceed to Checkout
               </button>
             </div>

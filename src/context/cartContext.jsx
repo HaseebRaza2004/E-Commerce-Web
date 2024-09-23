@@ -51,6 +51,10 @@ function CartContextProvider({ children }) {
         setCartItems([...arr]);
     };
 
+    function clearCart(id) {
+        setCartItems([]);
+      }
+
     function isItemAdded(id) {
         const arr = cartItems;
         const itemIndex = cartItems.findIndex((data) => data.id == id);
@@ -62,7 +66,7 @@ function CartContextProvider({ children }) {
     };
 
     return (
-        <CartContext.Provider value={{ cartItems, addItemToCart, removeItemFromCart, updateItemToCart, isItemAdded }}>{children}</CartContext.Provider>
+        <CartContext.Provider value={{ cartItems, addItemToCart, removeItemFromCart, updateItemToCart, isItemAdded, clearCart }}>{children}</CartContext.Provider>
     )
 };
 

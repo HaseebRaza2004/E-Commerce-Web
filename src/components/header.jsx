@@ -3,14 +3,15 @@ import { Avatar, Badge } from "antd";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/cartContext";
+import { AuthContext } from "../context/authContext";
 
 
 function Header() {
 
-    const {cartItems} = useContext(CartContext);
+    const { cartItems } = useContext(CartContext);
+    const { user } = useContext(AuthContext);
     // console.log('cart',cartItems);
-    
-    const isloggin = true;
+    // console.log('user in header', user);
 
     return (
         <header className="text-gray-600 body-font">
@@ -26,15 +27,15 @@ function Header() {
                 </nav>
 
                 {
-                    isloggin ? (
+                    user?.isLogin ? (
                         <div className="inline-flex items-center py-1 px-3 mt-4 md:mt-0">
                             <Link to={'/profile'}>
-                            <Avatar className="m-2 cursor-pointer" size={40} icon={<UserOutlined />} />
+                                <Avatar className="m-2 cursor-pointer" size={40} icon={<UserOutlined />} />
                             </Link>
                             <Link to={'/cart'}>
-                            <Badge count={cartItems.length}>
-                                <ShoppingCartOutlined className="text-4xl cursor-pointer" />
-                            </Badge>
+                                <Badge count={cartItems.length}>
+                                    <ShoppingCartOutlined className="text-4xl cursor-pointer" />
+                                </Badge>
                             </Link>
                         </div>
                     ) : (

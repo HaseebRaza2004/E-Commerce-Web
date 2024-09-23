@@ -4,13 +4,14 @@ function LogIn() {
 
   return (
     <div className="container mx-auto">
-      <form className="mx-auto xs:max-w-xs sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg mt-20">
+      <form id="loginForm" className="mx-auto xs:max-w-xs sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg mt-20">
         <h1 className="text-2xl text-center font-semibold my-8">Login</h1>
         <div className="mt-2">
           <label className="font-light ml-2">
-            Email:
+            Email :
           </label>
           <Input
+            onChange={(e) => { e.target.value }}
             className="py-3 mt-1"
             placeholder="Email"
             variant="filled"
@@ -19,9 +20,10 @@ function LogIn() {
         </div>
         <div className="mt-7">
           <label className="font-light ml-2">
-            Password:
+            Password :
           </label>
           <Input.Password
+            onChange={(e) => { e.target.value }}
             className="py-3 mt-1"
             placeholder="Password"
             variant="filled"
@@ -30,9 +32,10 @@ function LogIn() {
         </div>
         <div className="mt-7">
           <label className="font-light ml-2">
-            Confrim Password:
+            Confrim Password :
           </label>
           <Input.Password
+            onChange={(e) => { e.target.value }}
             className="py-3 mt-1"
             placeholder="Re-Enter Password"
             variant="filled"

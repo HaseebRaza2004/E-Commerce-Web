@@ -2,11 +2,14 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { CartContext } from "../context/cartContext";
+import { AuthContext } from "../context/authContext";
+import Loader from "../components/loader";
 import { Image } from "antd";
 
 function ProdutsDetails() {
 
   const { addItemToCart, isItemAdded } = useContext(CartContext);
+  const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -30,7 +33,12 @@ function ProdutsDetails() {
         setNotFound(true);
         setLoading(false);
       })
-  }, []);
+  }, [id]);
+
+  const sendUserForLogin = () => {
+    alert('To cotinue your order please loggin first.');
+    navigate('/auth');
+  };
 
   const { brand, title, rating, description, warrantyInformation, shippingInformation, price, thumbnail } = products;
 
@@ -39,7 +47,7 @@ function ProdutsDetails() {
 
       {
         loading ?
-          <h1 className="text-center m-5">Loading...</h1>
+          <Loader />
           :
           notFound ?
             navigate('/notFound')
@@ -90,7 +98,7 @@ function ProdutsDetails() {
                       <span className="title-font font-medium text-2xl text-gray-900">
                         ${price}
                       </span>
-                      <button onClick={() => { addItemToCart(products) }} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                      <button onClick={() => { { user?.isLogin ? addItemToCart(products) : sendUserForLogin() } }} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                         {
                           isItemAdded(products.id) ?
                             `Added (${isItemAdded(products.id).quantity})`
