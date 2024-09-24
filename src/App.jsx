@@ -6,7 +6,6 @@ import Dashboard from "./pages/dashboard";
 import Home from "./pages/home";
 import Products from "./pages/products";
 import ProdutsDetails from "./pages/productsDetails";
-import Orders from "./pages/orders";
 import AddToCart from "./pages/carts";
 import NotFound from "./pages/notFound";
 import AboutUs from "./pages/aboutUs";
@@ -29,7 +28,6 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProdutsDetails />} />
-            <Route path="/orders" element={<Orders />} />
             <Route path="/cart" element={<AddToCart />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/profile" element={<Profile />} />

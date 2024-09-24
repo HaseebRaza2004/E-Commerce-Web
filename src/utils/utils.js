@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getStorage  } from "firebase/storage";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAXpY4mGSbBYn_mrY6YfihYjzFlNQ9yLD0",
@@ -9,12 +10,13 @@ const firebaseConfig = {
   projectId: "smit-learning",
   storageBucket: "smit-learning.appspot.com",
   messagingSenderId: "734240451877",
-  appId: "1:734240451877:web:e7b35be3e6645a67333ecc",
-  measurementId: "G-FTJDX6BRE4"
+  appId: "1:734240451877:web:c921316aef46b407333ecc",
+  measurementId: "G-7N01RZW2NS"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app)

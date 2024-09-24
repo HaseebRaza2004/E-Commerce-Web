@@ -1,37 +1,79 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Input, Button } from "antd";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
-import { auth } from "../../utils/utils";
-
+import { useContext, useState } from "react";
+import { auth, db, storage } from "../../utils/utils";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { AuthContext } from "../../context/authContext";
+import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router";
 
 function SignUp() {
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [number, setNumber] = useState();
-  const [image, setImage] = useState();
-  
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [number, setNumber] = useState("");
+  const [image, setImage] = useState(null);
 
   function signupBtn() {
-   
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log('user', user);
-      
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log('error', errorCode, errorMessage);
-      
-    });
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('user', user);
+        console.log('user uid', user.uid);
 
-    
+        if (image) {
+          const userRef = ref(storage, `user/${user.uid}`);
 
+          uploadBytes(userRef, image)
+            .then((snapshot) => {
+              console.log('Uploaded a blob or file!', snapshot);
+
+              getDownloadURL(userRef).then((url) => {
+                console.log('url', url);
+                const userInfo = {
+                  email,
+                  name,
+                  number,
+                  imageUrl: url,
+                }
+                console.log('user info ', userInfo);
+
+                const userDbRef = doc(db, "users", user.uid);
+                console.log('user db ref', userDbRef);
+                console.log('user uid', user.uid);
+
+                setDoc(userDbRef, userInfo)
+                  .then(() => {
+                    console.log('user info saved to db');
+                    navigate('/');
+                  })
+                  .catch((error) => {
+                    console.log('error in getting URL', error.code, error.message);
+                  });
+
+              })
+                .catch((error) => {
+                  console.log('error in getting URL', error.code, error.message);
+                });
+
+            })
+            .catch((error) => {
+              console.log('error in upload bytes', error.code, error.message);
+            });
+        } else {
+          console.log("No image uploaded");
+        }
+
+      })
+      .catch((error) => {
+        console.log('error in create user', error.code, error.message);
+      });
   }
-
 
   return (
     <div className="container mx-auto">
@@ -42,12 +84,22 @@ function SignUp() {
             Profile Picture :
           </label>
           <Input
-            onChange={(e) => { setImage(e.target.value) }}
-            max={1}
+            required
+            onChange={(e) => { setImage(e.target.files[0]) }}  // Capture the actual file
             className="py-2 mt-1"
-            placeholder="Enter Image"
-            variant="filled"
             type="file"
+          />
+        </div>
+        <div className="mt-7">
+          <label className="font-light ml-2">
+            Name :
+          </label>
+          <Input
+            required
+            onChange={(e) => { setName(e.target.value) }}
+            className="py-3 mt-1"
+            placeholder="Enter Full Name"
+            type="text"
           />
         </div>
         <div className="mt-7">
@@ -55,10 +107,10 @@ function SignUp() {
             Email :
           </label>
           <Input
+            required
             onChange={(e) => { setEmail(e.target.value) }}
             className="py-3 mt-1"
             placeholder="Enter Email"
-            variant="filled"
             type="email"
           />
         </div>
@@ -67,33 +119,32 @@ function SignUp() {
             Password :
           </label>
           <Input.Password
+            required
             onChange={(e) => { setPassword(e.target.value) }}
             className="py-3 mt-1"
             placeholder="Enter Password"
-            variant="filled"
             type="password"
           />
         </div>
         <div className="mt-7">
           <label className="font-light ml-2">
-            Confrim Password :
+            Confirm Password :
           </label>
           <Input.Password
             className="py-3 mt-1"
             placeholder="Re-Enter Password"
-            variant="filled"
             type="password"
           />
         </div>
         <div className="mt-7">
           <label className="font-light ml-2">
-          Contact :
+            Contact :
           </label>
           <Input
-          onChange={(e) => { setNumber(e.target.value) }}
+            required
+            onChange={(e) => { setNumber(e.target.value) }}
             className="py-3 mt-1"
             placeholder="Enter Contact Number"
-            variant="filled"
             type="number"
           />
         </div>
@@ -107,6 +158,7 @@ function SignUp() {
 
 export default SignUp;
 
-//  <> </>
-// () => {}
-// ? :  $ %
+
+// //  <> </>
+// // () => {}
+// // ? :  $ % @

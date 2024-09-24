@@ -3,11 +3,12 @@ import { useContext, useEffect, useState } from "react";
 import Cards from "../components/card";
 import { Pagination, Select } from "antd";
 import { CartContext } from "../context/cartContext";
+import Loader from "../components/loader";
 
 
 function Products() {
 
-    const {cartItems} = useContext(CartContext);
+    const { cartItems } = useContext(CartContext);
 
     // console.log(cartItems);
 
@@ -45,7 +46,7 @@ function Products() {
     return (
         <div className="container mx-auto">
 
-            {loading ? <h1 className="text-center m-5">Loading...</h1> : null}
+            {loading ? <Loader /> : null}
 
             {/* Category */}
             <Select

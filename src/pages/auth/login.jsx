@@ -1,6 +1,29 @@
 import { Button, Input } from "antd";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
+import { auth } from "../../utils/utils";
+import { useNavigate } from "react-router";
 
 function LogIn() {
+
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function loginBtn() {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('user', user)
+        navigate('/');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('error', errorCode, errorMessage);
+      });
+  }
 
   return (
     <div className="container mx-auto">
@@ -11,7 +34,8 @@ function LogIn() {
             Email :
           </label>
           <Input
-            onChange={(e) => { e.target.value }}
+            onChange={(e) => { setEmail(e.target.value) }}
+            required
             className="py-3 mt-1"
             placeholder="Email"
             variant="filled"
@@ -23,7 +47,8 @@ function LogIn() {
             Password :
           </label>
           <Input.Password
-            onChange={(e) => { e.target.value }}
+            onChange={(e) => { setPassword(e.target.value) }}
+            required
             className="py-3 mt-1"
             placeholder="Password"
             variant="filled"
@@ -35,7 +60,7 @@ function LogIn() {
             Confrim Password :
           </label>
           <Input.Password
-            onChange={(e) => { e.target.value }}
+            required
             className="py-3 mt-1"
             placeholder="Re-Enter Password"
             variant="filled"
@@ -43,7 +68,7 @@ function LogIn() {
           />
         </div>
         <div className="mt-7 me-8 w-full flex justify-center items-center">
-          <Button className="mx-auto py-3 px-6">Login</Button>
+          <Button onClick={loginBtn} className="mx-auto py-3 px-6">Login</Button>
         </div>
       </form>
     </div>

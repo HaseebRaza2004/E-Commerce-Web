@@ -22,7 +22,6 @@ function Header() {
                 </div>
                 <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
                     <Link to={'/products'} className="mr-5 hover:text-gray-900 hover:underline hover:cursor-pointer">Products</Link>
-                    <Link to={'/orders'} className="mr-5 hover:text-gray-900 hover:underline hover:cursor-pointer">Orders</Link>
                     <Link to={'/about'} className="mr-5 hover:text-gray-900 hover:underline hover:cursor-pointer">About Us</Link>
                 </nav>
 
