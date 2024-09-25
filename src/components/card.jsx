@@ -7,6 +7,7 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 function Cards({ item }) {
 
     const { isItemAdded } = useContext(CartContext);
+    
     const isAdded = isItemAdded(item.id) ? true : false;
     
     const { thumbnail, category, title, price, id } = item

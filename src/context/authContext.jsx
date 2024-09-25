@@ -15,7 +15,6 @@ function AuthContextProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     function onAuthChange(user) {
-        console.log('user', user);
         if (user) {
             setUser({
                 isLogin: true,
@@ -46,7 +45,3 @@ function AuthContextProvider({ children }) {
 };
 
 export default AuthContextProvider;
-
-//  <> </>
-// () => {}
-// ? :  $

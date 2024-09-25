@@ -13,10 +13,8 @@ function Auth() {
     provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     signInWithPopup(auth, provider)
       .then((result) => {
-        console.log('result', result);
         const user = result.user;
         navigate('/')
-        console.log('User', user);
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;

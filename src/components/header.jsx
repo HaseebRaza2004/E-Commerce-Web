@@ -10,8 +10,6 @@ function Header() {
 
     const { cartItems } = useContext(CartContext);
     const { user } = useContext(AuthContext);
-    // console.log('cart',cartItems);
-    // console.log('user in header', user);
 
     return (
         <header className="text-gray-600 body-font">
@@ -24,7 +22,6 @@ function Header() {
                     <Link to={'/products'} className="mr-5 hover:text-gray-900 hover:underline hover:cursor-pointer">Products</Link>
                     <Link to={'/about'} className="mr-5 hover:text-gray-900 hover:underline hover:cursor-pointer">About Us</Link>
                 </nav>
-
                 {
                     user?.isLogin ? (
                         <div className="inline-flex items-center py-1 px-3 mt-4 md:mt-0">
@@ -50,7 +47,3 @@ function Header() {
 };
 
 export default Header;
-
-//  <> </>
-// () => {}
-// ? :  $

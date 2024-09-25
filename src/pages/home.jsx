@@ -14,7 +14,6 @@ function Home() {
     useEffect(() => {
         axios.get('https://dummyjson.com/products?limit=20')
             .then((res) => {
-                // console.log('products = ',res)
                 setProducts(res.data.products)
             })
     }, []);
@@ -22,13 +21,11 @@ function Home() {
     return (
         <>
             <div className="container mx-auto">
-
                 <div className="flex flex-col items-center">
                     <h1 className="text-5xl text-center font-serif my-2">Welcome, To our platform.</h1>
                     <p className="text-2xl text-center font-serif my-2">Our products are carefully selected to ensure that you get the best quality products in best price.</p>
-                    <Button onClick={() => {navigate('/products')}} className="my-2 py-3 px-5 border-gray-300 border" type="text">See All Products <ArrowRightOutlined /></Button>
+                    <Button onClick={() => { navigate('/products') }} className="my-2 py-3 px-5 border-gray-300 border" type="text">See All Products <ArrowRightOutlined /></Button>
                 </div>
-
                 <section className="text-gray-600 body-font">
                     <div className="container px-5 py-24 mx-auto">
                         <div className="flex flex-wrap -m-4">
@@ -42,14 +39,9 @@ function Home() {
                         </div>
                     </div>
                 </section>
-
             </div>
         </>
     )
 }
 
 export default Home;
-
-//  <> </>
-// () => {}
-// :

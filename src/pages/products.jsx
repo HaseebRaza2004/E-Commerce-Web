@@ -10,8 +10,6 @@ function Products() {
 
     const { cartItems } = useContext(CartContext);
 
-    // console.log(cartItems);
-
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState([]);
     const [limit, setLimit] = useState(40);
@@ -37,7 +35,6 @@ function Products() {
         setLoading(true);
         axios.get('https://dummyjson.com/products/categories')
             .then((res) => {
-                // console.log('category =', res.data);
                 setCategory(res.data);
                 setLoading(false);
             })
@@ -89,10 +86,6 @@ function Products() {
 
             {/* Pagination */}
 
-            {/* <Pagination className="mb-4 mr-4" onChange={(num) => {
-                setSkip((num - 1) * limit)
-            }} onShowSizeChange={(page, pageSize) => { setLimit(pageSize) }} align="end" defaultCurrent={1} total={total} pageSize={limit} /> */}
-
             <Pagination
                 className="mb-4 mr-4"
                 onChange={(num) => {
@@ -114,7 +107,3 @@ function Products() {
 }
 
 export default Products;
-
-//  <> </>
-// () => {}
-// ? :  $  

@@ -17,19 +17,15 @@ function ProdutsDetails() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
-  // console.log(id);
-
   // Show Product Throw Id 
   useEffect(() => {
     setNotFound(false);
     axios.get(`https://dummyjson.com/products/${id}`)
       .then((res) => {
-        // console.log(res);
         setProducts(res.data);
         setLoading(false);
       })
       .catch((err) => {
-        // console.log(err);
         setNotFound(true);
         setLoading(false);
       })
@@ -116,9 +112,4 @@ function ProdutsDetails() {
   )
 }
 
-export default ProdutsDetails;
-
-
-//  <> </>
-// () => {}
-// ? :  $  
+export default ProdutsDetails; 

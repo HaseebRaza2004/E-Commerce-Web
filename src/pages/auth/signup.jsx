@@ -23,44 +23,34 @@ function SignUp() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log('user', user);
-        console.log('user uid', user.uid);
-
         if (image) {
           const userRef = ref(storage, `user/${user.uid}`);
-
           uploadBytes(userRef, image)
             .then((snapshot) => {
-              console.log('Uploaded a blob or file!', snapshot);
-
               getDownloadURL(userRef).then((url) => {
-                console.log('url', url);
                 const userInfo = {
                   email,
                   name,
                   number,
-                  imageUrl: url,
+                  image: url,
                 }
-                console.log('user info ', userInfo);
+                navigate('/');
+                // const userDbRef = doc(db, "users", user.uid);
+                // console.log('user db ref', userDbRef);
+                // console.log('user uid', user.uid);
 
-                const userDbRef = doc(db, "users", user.uid);
-                console.log('user db ref', userDbRef);
-                console.log('user uid', user.uid);
-
-                setDoc(userDbRef, userInfo)
-                  .then(() => {
-                    console.log('user info saved to db');
-                    navigate('/');
-                  })
-                  .catch((error) => {
-                    console.log('error in getting URL', error.code, error.message);
-                  });
-
+                // setDoc(userDbRef, userInfo)
+                //   .then(() => {
+                //     console.log('user info saved to db');
+                //     navigate('/');
+                //   })
+                //   .catch((error) => {
+                //     console.log('error in getting URL', error.code, error.message);
+                //   });
               })
                 .catch((error) => {
                   console.log('error in getting URL', error.code, error.message);
                 });
-
             })
             .catch((error) => {
               console.log('error in upload bytes', error.code, error.message);
@@ -68,7 +58,6 @@ function SignUp() {
         } else {
           console.log("No image uploaded");
         }
-
       })
       .catch((error) => {
         console.log('error in create user', error.code, error.message);
@@ -157,8 +146,3 @@ function SignUp() {
 }
 
 export default SignUp;
-
-
-// //  <> </>
-// // () => {}
-// // ? :  $ % @

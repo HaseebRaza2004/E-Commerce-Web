@@ -12,6 +12,6 @@ function Dashboard() {
         <Footer/>
       </>
     )
-  }
+  };
   
   export default Dashboard;
